@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio | BiblioTEC{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container hero-content">
+        <span class="eyebrow">Descubre tu próxima lectura</span>
+
+        <h1>Tu próxima historia empieza aquí.</h1>
+
+        <p>
+            Explora libros, descubre nuevas historias y administra tus lecturas
+            desde un solo lugar.
+        </p>
+
+        <form class="search-box" action="/catalogo" method="get">
+            <label class="sr-only" for="q">Buscar libros</label>
+            <input
+                id="q"
+                name="q"
+                type="search"
+                placeholder="Título, autor o género"
+            >
+            <button type="submit">Buscar</button>
+        </form>
+
+        <div class="hero-actions">
+            <a class="btn primary" href="/catalogo">Explorar catálogo</a>
+            <button class="btn secondary" type="button" id="randomBook">
+                🎲 Sorpréndeme
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="section container">
+    <div class="section-heading">
+        <span class="eyebrow">Mood Search</span>
+        <h2>¿Cómo te sientes hoy?</h2>
+    </div>
+
+    <div class="mood-grid">
+        <a class="mood-card" href="/mood?mood=feliz">😊<span>Feliz</span></a>
+        <a class="mood-card" href="/mood?mood=relajado">😌<span>Relajado</span></a>
+        <a class="mood-card" href="/mood?mood=romantico">❤️<span>Romántico</span></a>
+        <a class="mood-card" href="/mood?mood=intenso">😱<span>Intenso</span></a>
+        <a class="mood-card" href="/mood?mood=aprender">🧠<span>Aprender</span></a>
+    </div>
+</section>
+{% endblock %}

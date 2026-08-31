@@ -1,0 +1,54 @@
+@media (max-width: 900px) {
+    .mood-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 700px) {
+    .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px 0;
+    }
+
+    .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        gap: 16px;
+        padding-bottom: 4px;
+    }
+
+    .hero {
+        min-height: auto;
+    }
+
+    .hero-content {
+        padding: 72px 0;
+    }
+
+    .search-box {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .search-box input,
+    .search-box button {
+        min-height: 50px;
+        border-radius: 12px;
+    }
+
+    .mood-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}

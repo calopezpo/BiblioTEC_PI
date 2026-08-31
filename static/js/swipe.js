@@ -1,0 +1,1 @@
+// Funciones del Swipe & Match.
