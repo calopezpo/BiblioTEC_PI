@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mi perfil | BiblioTEC</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+
+
+<body>
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="/" class="logo">
+            Biblio<span>TEC</span>
+        </a>
+
+        <button id="menuButton"
+                class="menu-button">
+            ☰
+        </button>
+
+        <div id="navMenu"
+             class="nav-menu">
+
+            <a href="/catalogo">
+                Catálogo
+            </a>
+
+            <a href="/prestamos">
+                Mis préstamos
+            </a>
+
+            <a href="/perfil">
+                Mi perfil
+            </a>
+
+            <button onclick="cerrarSesion()"
+                    class="btn-nav logout-btn">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+
+    <section class="page-header">
+
+        <span class="page-tag">
+            👤 Cuenta
+        </span>
+
+        <h1>
+            Mi perfil
+        </h1>
+
+        <p>
+            Consulta y actualiza tus datos personales.
+        </p>
+
+    </section>
+
+
+    <section class="profile-container">
+
+        <div class="profile-icon">
+            👤
+        </div>
+
+
+        <div id="mensajes"></div>
+
+
+        <form id="perfilForm"
+              class="profile-form">
+
+
+            <div class="form-row">
+
+                <div class="form-group">
+
+                    <label for="nombres">
+                        Nombres
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nombres"
+                        name="nombres"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="apellidos">
+                        Apellidos
+                    </label>
+
+                    <input
+                        type="text"
+                        id="apellidos"
+                        name="apellidos"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="cedula">
+                    Cédula
+                </label>
+
+                <input
+                    type="text"
+                    id="cedula"
+                    name="cedula"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="correo">
+                    Correo electrónico
+                </label>
+
+                <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    readonly
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="telefono">
+                    Teléfono
+                </label>
+
+                <input
+                    type="tel"
+                    id="telefono"
+                    name="telefono"
+                >
+
+            </div>
+
+
+            <button type="submit"
+                    class="btn-primary btn-full">
+
+                Guardar cambios
+
+            </button>
+
+
+        </form>
+
+    </section>
+
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 BiblioTEC
+    </p>
+
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/perfil.js') }}"></script>
+
+</body>
+
+</html>

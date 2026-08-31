@@ -1,13 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Mis préstamos | BiblioTEC</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
 
 
-{% block content %}
-<section class="section container">
-    <span class="eyebrow">BiblioTEC</span>
-    <h1>Perfil</h1>
-    <p>Datos personales, XP e insignias.</p>
+<body>
 
-    <div class="placeholder-card">
-        Pantalla lista para desarrollar.
-    </div>
-</section>
-{% endblock %}
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="/" class="logo">
+            Biblio<span>TEC</span>
+        </a>
+
+        <button id="menuButton"
+                class="menu-button">
+            ☰
+        </button>
+
+        <div id="navMenu"
+             class="nav-menu">
+
+            <a href="/catalogo">
+                Catálogo
+            </a>
+
+            <a href="/prestamos">
+                Mis préstamos
+            </a>
+
+            <a href="/perfil">
+                Mi perfil
+            </a>
+
+            <button onclick="cerrarSesion()"
+                    class="btn-nav logout-btn">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+
+    <section class="page-header">
+
+        <span class="page-tag">
+            📚 BiblioTEC
+        </span>
+
+        <h1>
+            Mis préstamos
+        </h1>
+
+        <p>
+            Consulta tus libros prestados y sus fechas de devolución.
+        </p>
+
+    </section>
+
+
+    <div id="mensajes"></div>
+
+
+    <section id="listaPrestamos"
+             class="loans-container">
+
+        <div class="loading">
+            Cargando préstamos...
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 BiblioTEC
+    </p>
+
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/prestamos.js') }}"></script>
+
+</body>
+
+</html>

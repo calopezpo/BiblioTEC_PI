@@ -1,11 +1,142 @@
 
-<section class="section container">
-    <span class="eyebrow">BiblioTEC</span>
-    <h1>Catálogo</h1>
-    <p>Aquí irán las tarjetas de libros, filtros y búsqueda.</p>
+<!DOCTYPE html>
+<html lang="es">
 
-    <div class="placeholder-card">
-        Pantalla lista para desarrollar.
-    </div>
-</section>
-{% endblock %}
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Catálogo | BiblioTEC</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/styles.css') }}">
+
+</head>
+
+
+<body>
+
+<header class="header">
+
+    <nav class="navbar">
+
+        <a href="/" class="logo">
+            Biblio<span>TEC</span>
+        </a>
+
+        <button id="menuButton"
+                class="menu-button">
+            ☰
+        </button>
+
+        <div id="navMenu"
+             class="nav-menu">
+
+            <a href="/">
+                Inicio
+            </a>
+
+            <a href="/catalogo">
+                Catálogo
+            </a>
+
+            <a href="/prestamos">
+                Mis préstamos
+            </a>
+
+            <a href="/perfil">
+                Mi perfil
+            </a>
+
+            <button onclick="cerrarSesion()"
+                    class="btn-nav logout-btn">
+
+                Cerrar sesión
+
+            </button>
+
+        </div>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+
+    <section class="page-header">
+
+        <span class="page-tag">
+            📚 Biblioteca
+        </span>
+
+        <h1>
+            Catálogo de libros
+        </h1>
+
+        <p>
+            Encuentra el libro que estás buscando.
+        </p>
+
+    </section>
+
+
+    <section class="search-section">
+
+        <form id="formBusqueda"
+              class="search-form">
+
+            <input
+                type="search"
+                id="buscarLibro"
+                placeholder="Buscar por título o autor..."
+            >
+
+            <button type="submit"
+                    class="btn-primary">
+
+                Buscar
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <div id="mensajes"></div>
+
+
+    <section id="listaLibros"
+             class="books-grid">
+
+        <div class="loading">
+            Cargando libros...
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<footer class="footer">
+
+    <p>
+        © 2026 BiblioTEC
+    </p>
+
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/catalogo.js') }}"></script>
+
+</body>
+
+</html>
