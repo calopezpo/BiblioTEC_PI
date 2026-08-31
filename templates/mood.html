@@ -1,13 +1,54 @@
+{% extends "base.html" %}
 
+{% block title %}Mood Search | BiblioTEC{% endblock %}
 
 {% block content %}
 <section class="section container">
-    <span class="eyebrow">BiblioTEC</span>
-    <h1>Mood Search</h1>
-    <p>Aquí se mostrarán libros según el estado de ánimo.</p>
-
-    <div class="placeholder-card">
-        Pantalla lista para desarrollar.
+    <div class="section-heading">
+        <span class="eyebrow">BiblioTEC</span>
+        <h1>Mood Search</h1>
+        <p>Selecciona cómo te sientes y BiblioTEC mostrará lecturas relacionadas.</p>
     </div>
+
+    <div class="mood-grid">
+        {% for mood in moods %}
+            <a class="mood-card {% if mood_actual|lower == mood.nombre|lower %}selected{% endif %}"
+               href="{{ url_for('mood', mood=mood.nombre) }}">
+                <span class="mood-icon">
+                    {% if mood.nombre|lower == "feliz" %}😊
+                    {% elif mood.nombre|lower == "relajado" %}😌
+                    {% elif mood.nombre|lower == "romantico" %}❤️
+                    {% elif mood.nombre|lower == "intenso" %}😮
+                    {% else %}🧠{% endif %}
+                </span>
+                <span>{{ mood.nombre }}</span>
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if mood_actual %}
+        <div class="section-heading subheading">
+            <span class="eyebrow">Resultado</span>
+            <h2>Libros para "{{ mood_actual }}"</h2>
+        </div>
+
+        {% if libros %}
+            <div class="book-grid">
+                {% for libro in libros %}
+                    <article class="book-card">
+                        <div class="book-cover">📖</div>
+                        <div class="book-body">
+                            <span class="badge">{{ libro.genero.nombre }}</span>
+                            <h3>{{ libro.titulo }}</h3>
+                            <p>{{ libro.autor.nombre_completo() }}</p>
+                            <a class="text-link" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">Ver detalle →</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">No hay libros relacionados con este estado de ánimo todavía.</div>
+        {% endif %}
+    {% endif %}
 </section>
 {% endblock %}

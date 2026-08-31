@@ -1,27 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Registro | BiblioTEC{% endblock %}
 
 {% block content %}
-<section class="section container">
-    <div class="section-heading">
+<section class="auth-section">
+    <div class="auth-card wide">
         <span class="eyebrow">Crear cuenta</span>
         <h1>Regístrate en BiblioTEC</h1>
+        <p>Crea tu cuenta para solicitar préstamos, reservas y consultar tu historial.</p>
+
+        <form class="form-card form-grid" method="post">
+            <div class="field">
+                <label for="nombres">Nombres</label>
+                <input id="nombres" name="nombres" type="text" autocomplete="given-name" required>
+            </div>
+
+            <div class="field">
+                <label for="apellidos">Apellidos</label>
+                <input id="apellidos" name="apellidos" type="text" autocomplete="family-name" required>
+            </div>
+
+            <div class="field full-field">
+                <label for="correo">Correo electrónico</label>
+                <input id="correo" name="correo" type="email" autocomplete="email" required>
+            </div>
+
+            <div class="field full-field">
+                <label for="password">Contraseña</label>
+                <input id="password" name="password" type="password" autocomplete="new-password" minlength="6" required>
+                <small>Mínimo 6 caracteres.</small>
+            </div>
+
+            <button class="btn primary full-field" type="submit">Crear cuenta</button>
+        </form>
+
+        <p class="auth-link">¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>.</p>
     </div>
-
-    <form class="form-card" method="post">
-        <label for="nombres">Nombres</label>
-        <input id="nombres" name="nombres" type="text" required>
-
-        <label for="apellidos">Apellidos</label>
-        <input id="apellidos" name="apellidos" type="text" required>
-
-        <label for="correo">Correo electrónico</label>
-        <input id="correo" name="correo" type="email" required>
-
-        <label for="password">Contraseña</label>
-        <input id="password" name="password" type="password" minlength="6" required>
-
-        <button class="btn primary" type="submit">Crear cuenta</button>
-    </form>
-
-    <p>¿Ya tienes una cuenta? <a href="{{ url_for('login') }}">Inicia sesión</a>.</p>
 </section>
 {% endblock %}

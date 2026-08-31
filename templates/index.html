@@ -1,33 +1,23 @@
+{% extends "base.html" %}
 
+{% block title %}Inicio | BiblioTEC{% endblock %}
 
 {% block content %}
 <section class="hero">
     <div class="container hero-content">
         <span class="eyebrow">Descubre tu próxima lectura</span>
-
         <h1>Tu próxima historia empieza aquí.</h1>
+        <p>Explora libros, descubre nuevas historias y administra tus lecturas desde un solo lugar.</p>
 
-        <p>
-            Explora libros, descubre nuevas historias y administra tus lecturas
-            desde un solo lugar.
-        </p>
-
-        <form class="search-box" action="/catalogo" method="get">
+        <form class="search-box" action="{{ url_for('catalogo') }}" method="get">
             <label class="sr-only" for="q">Buscar libros</label>
-            <input
-                id="q"
-                name="q"
-                type="search"
-                placeholder="Título, autor o género"
-            >
+            <input id="q" name="q" type="search" placeholder="Título, autor, género o ISBN">
             <button type="submit">Buscar</button>
         </form>
 
         <div class="hero-actions">
-            <a class="btn primary" href="/catalogo">Explorar catálogo</a>
-            <button class="btn secondary" type="button" id="randomBook">
-                🎲 Sorpréndeme
-            </button>
+            <a class="btn primary" href="{{ url_for('catalogo') }}">Explorar catálogo</a>
+            <a class="btn secondary" href="{{ url_for('sorprendeme') }}">🎲 Sorpréndeme</a>
         </div>
     </div>
 </section>
@@ -39,11 +29,38 @@
     </div>
 
     <div class="mood-grid">
-        <a class="mood-card" href="/mood?mood=feliz">😊<span>Feliz</span></a>
-        <a class="mood-card" href="/mood?mood=relajado">😌<span>Relajado</span></a>
-        <a class="mood-card" href="/mood?mood=romantico">❤️<span>Romántico</span></a>
-        <a class="mood-card" href="/mood?mood=intenso">😱<span>Intenso</span></a>
-        <a class="mood-card" href="/mood?mood=aprender">🧠<span>Aprender</span></a>
+        <a class="mood-card" href="{{ url_for('mood', mood='Feliz') }}">😊<span>Feliz</span></a>
+        <a class="mood-card" href="{{ url_for('mood', mood='Relajado') }}">😌<span>Relajado</span></a>
+        <a class="mood-card" href="{{ url_for('mood', mood='Romantico') }}">❤️<span>Romántico</span></a>
+        <a class="mood-card" href="{{ url_for('mood', mood='Intenso') }}">😮<span>Intenso</span></a>
+        <a class="mood-card" href="{{ url_for('mood', mood='Aprender') }}">🧠<span>Aprender</span></a>
     </div>
+</section>
+
+<section class="section container">
+    <div class="section-heading">
+        <span class="eyebrow">Catálogo</span>
+        <h2>Libros recientes</h2>
+    </div>
+
+    {% if libros %}
+        <div class="book-grid">
+            {% for libro in libros %}
+                <article class="book-card">
+                    <div class="book-cover" aria-hidden="true">📚</div>
+                    <div class="book-body">
+                        <span class="badge">{{ libro.genero.nombre }}</span>
+                        <h3>{{ libro.titulo }}</h3>
+                        <p>{{ libro.autor.nombre_completo() }}</p>
+                        <a class="text-link" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">
+                            Ver detalle →
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">Todavía no existen libros activos en el catálogo.</div>
+    {% endif %}
 </section>
 {% endblock %}

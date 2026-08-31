@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ codigo }} | BiblioTEC{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-card centered">
+        <span class="eyebrow">BiblioTEC</span>
+        <h1>{{ codigo }}</h1>
+        <p>{{ mensaje }}</p>
+        <a class="btn primary" href="{{ url_for('inicio') }}">Volver al inicio</a>
+    </div>
+</section>
+{% endblock %}

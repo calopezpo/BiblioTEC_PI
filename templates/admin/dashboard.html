@@ -7,13 +7,14 @@
     <div class="section-heading">
         <span class="eyebrow">Panel administrativo</span>
         <h1>Resumen de BiblioTEC</h1>
+        <p>Vista general de la información registrada en el sistema.</p>
     </div>
 
-    <div class="card-grid">
-        <article class="book-card"><h3>Usuarios</h3><p>{{ total_usuarios }}</p></article>
-        <article class="book-card"><h3>Libros</h3><p>{{ total_libros }}</p></article>
-        <article class="book-card"><h3>Préstamos</h3><p>{{ total_prestamos }}</p></article>
-        <article class="book-card"><h3>Reservas</h3><p>{{ total_reservas }}</p></article>
+    <div class="stats-grid">
+        <article class="stat-card"><strong>{{ total_usuarios }}</strong><span>Usuarios</span></article>
+        <article class="stat-card"><strong>{{ total_libros }}</strong><span>Libros</span></article>
+        <article class="stat-card"><strong>{{ total_prestamos }}</strong><span>Préstamos</span></article>
+        <article class="stat-card"><strong>{{ total_reservas }}</strong><span>Reservas</span></article>
     </div>
 </section>
 {% endblock %}
