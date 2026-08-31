@@ -1,13 +1,32 @@
+{% extends "base.html" %}
 
+{% block title %}Perfil | BiblioTEC{% endblock %}
 
 {% block content %}
 <section class="section container">
-    <span class="eyebrow">BiblioTEC</span>
-    <h1>Perfil</h1>
-    <p>Datos personales, XP e insignias.</p>
+    <div class="profile-card">
+        <div class="avatar">{{ usuario.nombres[0]|upper }}</div>
 
-    <div class="placeholder-card">
-        Pantalla lista para desarrollar.
+        <div>
+            <span class="eyebrow">Mi perfil</span>
+            <h1>{{ usuario.nombre_completo() }}</h1>
+            <p>{{ usuario.correo }}</p>
+
+            <div class="stats-grid profile-stats">
+                <article class="stat-card">
+                    <strong>{{ usuario.xp }}</strong>
+                    <span>XP</span>
+                </article>
+                <article class="stat-card">
+                    <strong>{{ usuario.rol }}</strong>
+                    <span>Rol</span>
+                </article>
+                <article class="stat-card">
+                    <strong>{{ usuario.estado }}</strong>
+                    <span>Estado</span>
+                </article>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}

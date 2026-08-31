@@ -1,11 +1,47 @@
+{% extends "base.html" %}
 
+{% block title %}Catálogo | BiblioTEC{% endblock %}
+
+{% block content %}
 <section class="section container">
-    <span class="eyebrow">BiblioTEC</span>
-    <h1>Catálogo</h1>
-    <p>Aquí irán las tarjetas de libros, filtros y búsqueda.</p>
-
-    <div class="placeholder-card">
-        Pantalla lista para desarrollar.
+    <div class="section-heading">
+        <span class="eyebrow">BiblioTEC</span>
+        <h1>Catálogo</h1>
+        <p>Busca por título, autor, género o ISBN.</p>
     </div>
+
+    <form class="search-box catalog-search" action="{{ url_for('catalogo') }}" method="get">
+        <label class="sr-only" for="q">Buscar libros</label>
+        <input id="q" name="q" type="search" value="{{ q }}" placeholder="Título, autor, género o ISBN">
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if q %}
+        <p class="result-text">Resultados para: <strong>{{ q }}</strong></p>
+    {% endif %}
+
+    {% if libros %}
+        <div class="book-grid">
+            {% for libro in libros %}
+                <article class="book-card">
+                    <div class="book-cover">📖</div>
+                    <div class="book-body">
+                        <div class="book-meta">
+                            <span class="badge">{{ libro.genero.nombre }}</span>
+                            <span>{{ libro.formato }}</span>
+                        </div>
+                        <h3>{{ libro.titulo }}</h3>
+                        <p>{{ libro.autor.nombre_completo() }}</p>
+                        <small>ISBN: {{ libro.isbn }}</small>
+                        <a class="btn primary small" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">
+                            Ver libro
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">No se encontraron libros con esa búsqueda.</div>
+    {% endif %}
 </section>
 {% endblock %}

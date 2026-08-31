@@ -1,11 +1,11 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BiblioTEC - Plataforma de consulta y gestión bibliográfica">
     <title>{% block title %}BiblioTEC{% endblock %}</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
@@ -40,7 +40,7 @@
 
 {% with mensajes = get_flashed_messages(with_categories=true) %}
     {% if mensajes %}
-        <section class="container">
+        <section class="container flash-zone" aria-live="polite">
             {% for categoria, mensaje in mensajes %}
                 <div class="flash {{ categoria }}">{{ mensaje }}</div>
             {% endfor %}
@@ -53,8 +53,9 @@
 </main>
 
 <footer class="footer">
-    <div class="container">
-        <p>BiblioTEC</p>
+    <div class="container footer-content">
+        <strong>BiblioTEC</strong>
+        <span>Tu próxima lectura empieza aquí.</span>
     </div>
 </footer>
 

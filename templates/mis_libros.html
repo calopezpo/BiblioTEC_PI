@@ -1,13 +1,87 @@
+{% extends "base.html" %}
 
+{% block title %}Mis libros | BiblioTEC{% endblock %}
 
 {% block content %}
 <section class="section container">
-    <span class="eyebrow">BiblioTEC</span>
-    <h1>Mis libros</h1>
-    <p>Préstamos, reservas, favoritos e historial.</p>
-
-    <div class="placeholder-card">
-        Pantalla lista para desarrollar.
+    <div class="section-heading">
+        <span class="eyebrow">Mi biblioteca</span>
+        <h1>Mis libros</h1>
+        <p>Consulta tus préstamos y reservas desde un solo lugar.</p>
     </div>
+
+    <div class="section-heading subheading">
+        <h2>Préstamos</h2>
+    </div>
+
+    {% if prestamos %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Libro</th>
+                        <th>Préstamo</th>
+                        <th>Fecha límite</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prestamo in prestamos %}
+                        <tr>
+                            <td>{{ prestamo.ejemplar.libro.titulo }}</td>
+                            <td>{{ prestamo.fecha_prestamo }}</td>
+                            <td>{{ prestamo.fecha_limite }}</td>
+                            <td><span class="status">{{ prestamo.estado }}</span></td>
+                            <td>
+                                {% if prestamo.estado == "Activo" %}
+                                    <form method="post" action="{{ url_for('devolver_prestamo', id_prestamo=prestamo.id_prestamo) }}">
+                                        <button class="btn secondary small" type="submit">Devolver</button>
+                                    </form>
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">Todavía no tienes préstamos.</div>
+    {% endif %}
+
+    <div class="section-heading subheading">
+        <h2>Reservas</h2>
+    </div>
+
+    {% if reservas %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Libro</th>
+                        <th>Biblioteca</th>
+                        <th>Reserva</th>
+                        <th>Expira</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reserva in reservas %}
+                        <tr>
+                            <td>{{ reserva.libro.titulo }}</td>
+                            <td>{{ reserva.biblioteca.nombre }}</td>
+                            <td>{{ reserva.fecha_reserva.strftime("%Y-%m-%d") if reserva.fecha_reserva else "—" }}</td>
+                            <td>{{ reserva.fecha_expiracion.strftime("%Y-%m-%d") }}</td>
+                            <td><span class="status">{{ reserva.estado }}</span></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">Todavía no tienes reservas.</div>
+    {% endif %}
 </section>
 {% endblock %}
