@@ -19,6 +19,7 @@ from models import (
 
 from auth import login_requerido, rol_requerido
 from email_service import enviar_correo_prestamo, enviar_correo_devolucion
+from report_service import enviar_reporte_prestamos_admin
 
 
 app = Flask(__name__)
@@ -420,6 +421,29 @@ def admin():
         bibliotecas=bibliotecas,
         prestamos_activos=prestamos_activos
     )
+
+
+# ============================================================
+# ENVIAR REPORTE DE PRESTAMOS AL ADMIN
+# ============================================================
+
+@app.post("/admin/reportes/prestamos/enviar")
+@rol_requerido("Administrador")
+def enviar_reporte_prestamos():
+    enviado = enviar_reporte_prestamos_admin()
+
+    if enviado:
+        flash(
+            "Reporte de préstamos generado y enviado al correo del administrador.",
+            "success"
+        )
+    else:
+        flash(
+            "No se pudo generar o enviar el reporte de préstamos.",
+            "danger"
+        )
+
+    return redirect(url_for("admin"))
 
 
 # ============================================================
