@@ -802,3 +802,7 @@ td {
     }
 
 }
+
+.report-card + .report-card {
+    margin-top: 20px;
+}
