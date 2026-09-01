@@ -4,36 +4,111 @@
 
 {% block content %}
 <section class="section container">
-    <a class="text-link" href="{{ url_for('catalogo') }}">← Volver al catálogo</a>
+
+    <a class="text-link" href="{{ url_for('catalogo') }}">
+        ← Volver al catálogo
+    </a>
 
     <div class="detail-layout">
-        <div class="detail-cover">📚</div>
 
-        <div>
-            <span class="eyebrow">{{ libro.formato }}</span>
-            <h1 class="detail-title">{{ libro.titulo }}</h1>
-            <p class="lead">{{ libro.autor.nombre_completo() }} · {{ libro.genero.nombre }}</p>
+        {% if libro.portada %}
 
-            <div class="info-list">
-                <div><strong>ISBN</strong><span>{{ libro.isbn }}</span></div>
-                <div><strong>Año</strong><span>{{ libro.anio_publicacion or "Sin información" }}</span></div>
-                <div><strong>Estado</strong><span>{{ libro.estado }}</span></div>
-                <div><strong>Acceso</strong><span>{{ libro.obtener_acceso() }}</span></div>
+            <div class="detail-cover">
+
+                <img
+                    src="{{ libro.portada }}"
+                    alt="Portada de {{ libro.titulo }}"
+                    class="detail-cover-image"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                >
+
+                <div class="detail-cover-fallback" style="display:none;">
+                    📚
+                </div>
+
             </div>
 
-            <p>{{ libro.descripcion or "Este libro todavía no tiene una descripción registrada." }}</p>
+        {% else %}
+
+            <div class="detail-cover">
+                <div class="detail-cover-fallback">
+                    📚
+                </div>
+            </div>
+
+        {% endif %}
+
+
+        <div>
+
+            <span class="eyebrow">
+                {{ libro.formato }}
+            </span>
+
+            <h1 class="detail-title">
+                {{ libro.titulo }}
+            </h1>
+
+            <p class="lead">
+                {{ libro.autor.nombre_completo() }} · {{ libro.genero.nombre }}
+            </p>
+
+
+            <div class="info-list">
+
+                <div>
+                    <strong>ISBN</strong>
+                    <span>{{ libro.isbn }}</span>
+                </div>
+
+                <div>
+                    <strong>Año</strong>
+                    <span>{{ libro.anio_publicacion or "Sin información" }}</span>
+                </div>
+
+                <div>
+                    <strong>Estado</strong>
+                    <span>{{ libro.estado }}</span>
+                </div>
+
+                <div>
+                    <strong>Acceso</strong>
+                    <span>{{ libro.obtener_acceso() }}</span>
+                </div>
+
+            </div>
+
+
+            <p>
+                {{ libro.descripcion or "Este libro todavía no tiene una descripción registrada." }}
+            </p>
+
         </div>
+
     </div>
+
 
     <div class="section-heading subheading">
-        <span class="eyebrow">Disponibilidad</span>
-        <h2>Ejemplares</h2>
+
+        <span class="eyebrow">
+            Disponibilidad
+        </span>
+
+        <h2>
+            Ejemplares
+        </h2>
+
     </div>
 
+
     {% if ejemplares %}
+
         <div class="table-wrap">
+
             <table>
+
                 <thead>
+
                     <tr>
                         <th>Código</th>
                         <th>Biblioteca</th>
@@ -41,34 +116,93 @@
                         <th>Estado</th>
                         <th>Acción</th>
                     </tr>
+
                 </thead>
+
                 <tbody>
+
                     {% for ejemplar in ejemplares %}
+
                         <tr>
-                            <td>{{ ejemplar.codigo }}</td>
-                            <td>{{ ejemplar.biblioteca.nombre }}</td>
-                            <td>{{ ejemplar.obtener_ubicacion() }}</td>
-                            <td><span class="status {{ ejemplar.estado|lower }}">{{ ejemplar.estado }}</span></td>
-                            <td class="actions-cell">
-                                {% if session.get("usuario_id") and ejemplar.estado == "Disponible" %}
-                                    <form method="post" action="{{ url_for('realizar_prestamo', id_ejemplar=ejemplar.id_ejemplar) }}">
-                                        <button class="btn primary small" type="submit">Solicitar préstamo</button>
-                                    </form>
-                                {% elif not session.get("usuario_id") %}
-                                    <a class="btn secondary small" href="{{ url_for('login') }}">Inicia sesión</a>
-                                {% else %}
-                                    <form method="post" action="{{ url_for('realizar_reserva', id_libro=libro.id_libro, id_biblioteca=ejemplar.id_biblioteca) }}">
-                                        <button class="btn secondary small" type="submit">Reservar</button>
-                                    </form>
-                                {% endif %}
+
+                            <td>
+                                {{ ejemplar.codigo }}
                             </td>
+
+                            <td>
+                                {{ ejemplar.biblioteca.nombre }}
+                            </td>
+
+                            <td>
+                                {{ ejemplar.obtener_ubicacion() }}
+                            </td>
+
+                            <td>
+
+                                <span class="status {{ ejemplar.estado|lower }}">
+                                    {{ ejemplar.estado }}
+                                </span>
+
+                            </td>
+
+                            <td class="actions-cell">
+
+                                {% if session.get("usuario_id") and ejemplar.estado == "Disponible" %}
+
+                                    <form
+                                        method="post"
+                                        action="{{ url_for('realizar_prestamo', id_ejemplar=ejemplar.id_ejemplar) }}"
+                                    >
+
+                                        <button class="btn primary small" type="submit">
+                                            Solicitar préstamo
+                                        </button>
+
+                                    </form>
+
+                                {% elif not session.get("usuario_id") %}
+
+                                    <a
+                                        class="btn secondary small"
+                                        href="{{ url_for('login') }}"
+                                    >
+                                        Inicia sesión
+                                    </a>
+
+                                {% else %}
+
+                                    <form
+                                        method="post"
+                                        action="{{ url_for('realizar_reserva', id_libro=libro.id_libro, id_biblioteca=ejemplar.id_biblioteca) }}"
+                                    >
+
+                                        <button class="btn secondary small" type="submit">
+                                            Reservar
+                                        </button>
+
+                                    </form>
+
+                                {% endif %}
+
+                            </td>
+
                         </tr>
+
                     {% endfor %}
+
                 </tbody>
+
             </table>
+
         </div>
+
     {% else %}
-        <div class="empty-state">No existen ejemplares registrados para este libro.</div>
+
+        <div class="empty-state">
+            No existen ejemplares registrados para este libro.
+        </div>
+
     {% endif %}
+
 </section>
 {% endblock %}

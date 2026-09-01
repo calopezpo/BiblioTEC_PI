@@ -3,32 +3,114 @@
 {% block title %}Swipe & Match | BiblioTEC{% endblock %}
 
 {% block content %}
+
 <section class="section container">
+
     <div class="section-heading centered">
-        <span class="eyebrow">Descubrimiento</span>
-        <h1>Swipe & Match</h1>
-        <p>Descubre un libro a la vez y pasa al siguiente cuando quieras.</p>
+
+        <span class="eyebrow">
+            Descubrimiento
+        </span>
+
+        <h1>
+            Swipe & Match
+        </h1>
+
+        <p>
+            Descubre un libro a la vez y pasa al siguiente cuando quieras.
+        </p>
+
     </div>
 
+
     {% if libros %}
+
         <div class="swipe-deck" id="swipeDeck">
+
             {% for libro in libros %}
+
                 <article class="swipe-card {% if not loop.first %}hidden{% endif %}">
-                    <div class="swipe-cover">📚</div>
-                    <span class="badge">{{ libro.genero.nombre }}</span>
-                    <h2>{{ libro.titulo }}</h2>
-                    <p>{{ libro.autor.nombre_completo() }}</p>
-                    <p>{{ libro.descripcion or "Sin descripción." }}</p>
+
+                    {% if libro.portada %}
+
+                        <div class="swipe-cover">
+
+                            <img
+                                class="swipe-cover-image"
+                                src="{{ libro.portada }}"
+                                alt="Portada de {{ libro.titulo }}"
+                                loading="lazy"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            >
+
+                            <div class="swipe-cover-fallback" style="display:none;">
+                                📚
+                            </div>
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="swipe-cover">
+
+                            <div class="swipe-cover-fallback">
+                                📚
+                            </div>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <span class="badge">
+                        {{ libro.genero.nombre }}
+                    </span>
+
+                    <h2>
+                        {{ libro.titulo }}
+                    </h2>
+
+                    <p>
+                        {{ libro.autor.nombre_completo() }}
+                    </p>
+
+                    <p>
+                        {{ libro.descripcion or "Sin descripción." }}
+                    </p>
+
+
                     <div class="hero-actions">
-                        <button class="btn secondary js-next-card" type="button">Pasar</button>
-                        <a class="btn primary" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">Me interesa</a>
+
+                        <button class="btn secondary js-next-card" type="button">
+                            Pasar
+                        </button>
+
+                        <a class="btn primary" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">
+                            Me interesa
+                        </a>
+
                     </div>
+
                 </article>
+
             {% endfor %}
+
         </div>
-        <p class="swipe-counter" id="swipeCounter">1 de {{ libros|length }}</p>
+
+
+        <p class="swipe-counter" id="swipeCounter">
+            1 de {{ libros|length }}
+        </p>
+
+
     {% else %}
-        <div class="empty-state">No hay libros disponibles para mostrar.</div>
+
+        <div class="empty-state">
+            No hay libros disponibles para mostrar.
+        </div>
+
     {% endif %}
+
 </section>
+
 {% endblock %}

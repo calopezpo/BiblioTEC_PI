@@ -71,3 +71,28 @@ El método `obtener_acceso()` se redefine en las subclases, demostrando polimorf
 - `.env` no debe subirse a GitHub.
 - `.env.example` nunca debe contener contraseñas reales.
 - `venv/` y `__pycache__/` no se suben al repositorio.
+
+
+## Correos de confirmación
+
+BiblioTEC puede enviar correos cuando:
+
+- se registra un préstamo;
+- el usuario devuelve un libro;
+- el administrador marca un préstamo como devuelto.
+
+Para Gmail, configura en `.env`:
+
+```text
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=tu_correo@gmail.com
+EMAIL_PASSWORD=tu_password_de_aplicacion
+EMAIL_FROM_NAME=BiblioTEC
+```
+
+Usa una contraseña de aplicación de Gmail. No coloques tu contraseña normal de Gmail y no subas `.env` a GitHub.
+
+## Administración de libros
+
+El administrador puede entrar a `/admin` y agregar un nuevo libro. Si el libro es físico, también puede registrar opcionalmente su primer ejemplar seleccionando biblioteca, código, pasillo y estante.
