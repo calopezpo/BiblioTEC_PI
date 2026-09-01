@@ -4,12 +4,19 @@
 
 {% block content %}
 
+
 <section class="section container">
+
     <div class="section-heading">
         <span class="eyebrow">Panel administrativo</span>
+
         <h1>Administración de BiblioTEC</h1>
-        <p>Gestiona el catálogo, los préstamos y los reportes registrados en el sistema.</p>
+
+        <p>
+            Gestiona el catálogo, los préstamos y los reportes registrados en el sistema.
+        </p>
     </div>
+
 
     <div class="stats-grid">
 
@@ -18,15 +25,18 @@
             <span>Usuarios</span>
         </article>
 
+
         <article class="stat-card">
             <strong>{{ total_libros }}</strong>
             <span>Libros</span>
         </article>
 
+
         <article class="stat-card">
             <strong>{{ total_prestamos }}</strong>
             <span>Préstamos</span>
         </article>
+
 
         <article class="stat-card">
             <strong>{{ total_reservas }}</strong>
@@ -34,25 +44,43 @@
         </article>
 
     </div>
+
 </section>
 
+
+<!-- ============================================================
+     REPORTES ADMINISTRATIVOS
+============================================================ -->
 
 <section class="section container">
 
     <div class="section-heading">
-        <span class="eyebrow">Reportes</span>
-        <h2>Reportes administrativos</h2>
+
+        <span class="eyebrow">
+            Reportes
+        </span>
+
+        <h2>
+            Reportes administrativos
+        </h2>
+
         <p>
-            Genera el reporte general de préstamos y envíalo automáticamente
+            Genera reportes del sistema y envíalos automáticamente
             al correo registrado del administrador.
         </p>
+
     </div>
+
+
+    <!-- REPORTE 1: PRESTAMOS -->
 
     <div class="report-card">
 
         <div class="report-info">
 
-            <h3>Reporte general de préstamos</h3>
+            <h3>
+                Reporte general de préstamos
+            </h3>
 
             <p>
                 Incluye usuarios, correos, libros, autores, ejemplares,
@@ -60,6 +88,7 @@
             </p>
 
         </div>
+
 
         <form
             method="post"
@@ -77,15 +106,65 @@
 
     </div>
 
+
+    <!-- REPORTE 2: LIBROS DISPONIBLES -->
+
+    <div class="report-card">
+
+        <div class="report-info">
+
+            <h3>
+                Reporte de libros disponibles
+            </h3>
+
+            <p>
+                Incluye únicamente los ejemplares disponibles,
+                junto con el título del libro, autor, género,
+                formato, biblioteca, código, pasillo y estante.
+            </p>
+
+        </div>
+
+
+        <form
+            method="post"
+            action="{{ url_for('enviar_reporte_libros_disponibles') }}"
+        >
+
+            <button
+                class="btn primary"
+                type="submit"
+            >
+                Enviar libros disponibles por correo
+            </button>
+
+        </form>
+
+    </div>
+
 </section>
 
+
+<!-- ============================================================
+     AGREGAR NUEVO LIBRO
+============================================================ -->
 
 <section class="section container">
 
     <div class="section-heading">
-        <span class="eyebrow">Catálogo</span>
-        <h2>Agregar nuevo libro</h2>
-        <p>Puedes seleccionar un autor existente o registrar uno nuevo.</p>
+
+        <span class="eyebrow">
+            Catálogo
+        </span>
+
+        <h2>
+            Agregar nuevo libro
+        </h2>
+
+        <p>
+            Puedes seleccionar un autor existente o registrar uno nuevo.
+        </p>
+
     </div>
 
 
@@ -94,6 +173,9 @@
         method="post"
         action="{{ url_for('admin_nuevo_libro') }}"
     >
+
+
+        <!-- TITULO -->
 
         <div class="field full-field">
 
@@ -111,6 +193,8 @@
         </div>
 
 
+        <!-- ISBN -->
+
         <div class="field">
 
             <label for="isbn">
@@ -126,6 +210,8 @@
 
         </div>
 
+
+        <!-- AÑO -->
 
         <div class="field">
 
@@ -143,6 +229,8 @@
         </div>
 
 
+        <!-- AUTOR EXISTENTE -->
+
         <div class="field">
 
             <label for="id_autor">
@@ -158,6 +246,7 @@
                     Seleccionar...
                 </option>
 
+
                 {% for autor in autores %}
 
                     <option value="{{ autor.id_autor }}">
@@ -170,6 +259,8 @@
 
         </div>
 
+
+        <!-- NUEVO AUTOR NOMBRE -->
 
         <div class="field">
 
@@ -187,6 +278,8 @@
         </div>
 
 
+        <!-- NUEVO AUTOR APELLIDO -->
+
         <div class="field">
 
             <label for="nuevo_autor_apellidos">
@@ -202,6 +295,8 @@
 
         </div>
 
+
+        <!-- GENERO -->
 
         <div class="field">
 
@@ -219,6 +314,7 @@
                     Seleccionar...
                 </option>
 
+
                 {% for genero in generos %}
 
                     <option value="{{ genero.id_genero }}">
@@ -231,6 +327,8 @@
 
         </div>
 
+
+        <!-- MOOD -->
 
         <div class="field">
 
@@ -247,6 +345,7 @@
                     Seleccionar...
                 </option>
 
+
                 {% for mood in moods %}
 
                     <option value="{{ mood.id_mood }}">
@@ -259,6 +358,8 @@
 
         </div>
 
+
+        <!-- FORMATO -->
 
         <div class="field">
 
@@ -288,6 +389,8 @@
         </div>
 
 
+        <!-- PORTADA -->
+
         <div class="field">
 
             <label for="portada">
@@ -304,6 +407,8 @@
         </div>
 
 
+        <!-- DESCRIPCION -->
+
         <div class="field full-field">
 
             <label for="descripcion">
@@ -319,6 +424,8 @@
         </div>
 
 
+        <!-- EJEMPLAR FISICO -->
+
         <div class="full-field">
 
             <h3>
@@ -331,6 +438,8 @@
 
         </div>
 
+
+        <!-- BIBLIOTECA -->
 
         <div class="field">
 
@@ -347,6 +456,7 @@
                     Seleccionar...
                 </option>
 
+
                 {% for biblioteca in bibliotecas %}
 
                     <option value="{{ biblioteca.id_biblioteca }}">
@@ -359,6 +469,8 @@
 
         </div>
 
+
+        <!-- CODIGO EJEMPLAR -->
 
         <div class="field">
 
@@ -376,6 +488,8 @@
         </div>
 
 
+        <!-- PASILLO -->
+
         <div class="field">
 
             <label for="pasillo">
@@ -390,6 +504,8 @@
 
         </div>
 
+
+        <!-- ESTANTE -->
 
         <div class="field">
 
@@ -406,6 +522,8 @@
         </div>
 
 
+        <!-- BOTON -->
+
         <button
             class="btn primary full-field"
             type="submit"
@@ -417,6 +535,10 @@
 
 </section>
 
+
+<!-- ============================================================
+     PRESTAMOS ACTIVOS
+============================================================ -->
 
 <section class="section container">
 
@@ -447,11 +569,27 @@
                 <thead>
 
                     <tr>
-                        <th>Usuario</th>
-                        <th>Correo</th>
-                        <th>Libro</th>
-                        <th>Fecha límite</th>
-                        <th>Acción</th>
+
+                        <th>
+                            Usuario
+                        </th>
+
+                        <th>
+                            Correo
+                        </th>
+
+                        <th>
+                            Libro
+                        </th>
+
+                        <th>
+                            Fecha límite
+                        </th>
+
+                        <th>
+                            Acción
+                        </th>
+
                     </tr>
 
                 </thead>
@@ -467,23 +605,30 @@
                                 {{ prestamo.usuario.nombre_completo() }}
                             </td>
 
+
                             <td>
                                 {{ prestamo.usuario.correo }}
                             </td>
+
 
                             <td>
                                 {{ prestamo.ejemplar.libro.titulo }}
                             </td>
 
+
                             <td>
                                 {{ prestamo.fecha_limite }}
                             </td>
+
 
                             <td>
 
                                 <form
                                     method="post"
-                                    action="{{ url_for('admin_devolver_prestamo', id_prestamo=prestamo.id_prestamo) }}"
+                                    action="{{ url_for(
+                                        'admin_devolver_prestamo',
+                                        id_prestamo=prestamo.id_prestamo
+                                    ) }}"
                                 >
 
                                     <button
@@ -511,11 +656,14 @@
     {% else %}
 
         <div class="empty-state">
+
             No existen préstamos activos.
+
         </div>
 
     {% endif %}
 
 </section>
+
 
 {% endblock %}
