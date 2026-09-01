@@ -3,52 +3,147 @@
 {% block title %}Mood Search | BiblioTEC{% endblock %}
 
 {% block content %}
+
 <section class="section container">
+
     <div class="section-heading">
         <span class="eyebrow">BiblioTEC</span>
         <h1>Mood Search</h1>
         <p>Selecciona cómo te sientes y BiblioTEC mostrará lecturas relacionadas.</p>
     </div>
 
+
     <div class="mood-grid">
+
         {% for mood in moods %}
-            <a class="mood-card {% if mood_actual|lower == mood.nombre|lower %}selected{% endif %}"
-               href="{{ url_for('mood', mood=mood.nombre) }}">
+
+            <a
+                class="mood-card {% if mood_actual|lower == mood.nombre|lower %}selected{% endif %}"
+                href="{{ url_for('mood', mood=mood.nombre) }}"
+            >
+
                 <span class="mood-icon">
-                    {% if mood.nombre|lower == "feliz" %}😊
-                    {% elif mood.nombre|lower == "relajado" %}😌
-                    {% elif mood.nombre|lower == "romantico" %}❤️
-                    {% elif mood.nombre|lower == "intenso" %}😮
-                    {% else %}🧠{% endif %}
+
+                    {% if mood.nombre|lower == "feliz" %}
+                        😊
+
+                    {% elif mood.nombre|lower == "relajado" %}
+                        😌
+
+                    {% elif mood.nombre|lower == "romantico" %}
+                        ❤️
+
+                    {% elif mood.nombre|lower == "intenso" %}
+                        😮
+
+                    {% else %}
+                        🧠
+                    {% endif %}
+
                 </span>
-                <span>{{ mood.nombre }}</span>
+
+                <span>
+                    {{ mood.nombre }}
+                </span>
+
             </a>
+
         {% endfor %}
+
     </div>
 
+
     {% if mood_actual %}
+
         <div class="section-heading subheading">
-            <span class="eyebrow">Resultado</span>
-            <h2>Libros para "{{ mood_actual }}"</h2>
+
+            <span class="eyebrow">
+                Resultado
+            </span>
+
+            <h2>
+                Libros para "{{ mood_actual }}"
+            </h2>
+
         </div>
 
+
         {% if libros %}
+
             <div class="book-grid">
+
                 {% for libro in libros %}
+
                     <article class="book-card">
-                        <div class="book-cover">📖</div>
+
+                        {% if libro.portada %}
+
+                            <div class="book-cover">
+
+                                <img
+                                    class="book-cover-image"
+                                    src="{{ libro.portada }}"
+                                    alt="Portada de {{ libro.titulo }}"
+                                    loading="lazy"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                >
+
+                                <div class="book-cover-fallback" style="display:none;">
+                                    📖
+                                </div>
+
+                            </div>
+
+                        {% else %}
+
+                            <div class="book-cover">
+
+                                <div class="book-cover-fallback">
+                                    📖
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+
                         <div class="book-body">
-                            <span class="badge">{{ libro.genero.nombre }}</span>
-                            <h3>{{ libro.titulo }}</h3>
-                            <p>{{ libro.autor.nombre_completo() }}</p>
-                            <a class="text-link" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">Ver detalle →</a>
+
+                            <span class="badge">
+                                {{ libro.genero.nombre }}
+                            </span>
+
+                            <h3>
+                                {{ libro.titulo }}
+                            </h3>
+
+                            <p>
+                                {{ libro.autor.nombre_completo() }}
+                            </p>
+
+                            <a class="text-link" href="{{ url_for('detalle_libro', id_libro=libro.id_libro) }}">
+                                Ver detalle →
+                            </a>
+
                         </div>
+
                     </article>
+
                 {% endfor %}
+
             </div>
+
+
         {% else %}
-            <div class="empty-state">No hay libros relacionados con este estado de ánimo todavía.</div>
+
+            <div class="empty-state">
+                No hay libros relacionados con este estado de ánimo todavía.
+            </div>
+
         {% endif %}
+
     {% endif %}
+
 </section>
+
 {% endblock %}

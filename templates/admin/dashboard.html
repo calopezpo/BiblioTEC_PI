@@ -3,18 +3,328 @@
 {% block title %}Administración | BiblioTEC{% endblock %}
 
 {% block content %}
+
 <section class="section container">
     <div class="section-heading">
         <span class="eyebrow">Panel administrativo</span>
-        <h1>Resumen de BiblioTEC</h1>
-        <p>Vista general de la información registrada en el sistema.</p>
+        <h1>Administración de BiblioTEC</h1>
+        <p>Gestiona el catálogo y los préstamos registrados en el sistema.</p>
     </div>
 
     <div class="stats-grid">
-        <article class="stat-card"><strong>{{ total_usuarios }}</strong><span>Usuarios</span></article>
-        <article class="stat-card"><strong>{{ total_libros }}</strong><span>Libros</span></article>
-        <article class="stat-card"><strong>{{ total_prestamos }}</strong><span>Préstamos</span></article>
-        <article class="stat-card"><strong>{{ total_reservas }}</strong><span>Reservas</span></article>
+        <article class="stat-card">
+            <strong>{{ total_usuarios }}</strong>
+            <span>Usuarios</span>
+        </article>
+
+        <article class="stat-card">
+            <strong>{{ total_libros }}</strong>
+            <span>Libros</span>
+        </article>
+
+        <article class="stat-card">
+            <strong>{{ total_prestamos }}</strong>
+            <span>Préstamos</span>
+        </article>
+
+        <article class="stat-card">
+            <strong>{{ total_reservas }}</strong>
+            <span>Reservas</span>
+        </article>
     </div>
 </section>
+
+
+<section class="section container">
+    <div class="section-heading">
+        <span class="eyebrow">Catálogo</span>
+        <h2>Agregar nuevo libro</h2>
+        <p>Puedes seleccionar un autor existente o registrar uno nuevo.</p>
+    </div>
+
+    <form class="form-card form-grid" method="post" action="{{ url_for('admin_nuevo_libro') }}">
+
+        <div class="field full-field">
+            <label for="titulo">Título</label>
+            <input id="titulo" name="titulo" type="text" required>
+        </div>
+
+        <div class="field">
+            <label for="isbn">ISBN</label>
+            <input id="isbn" name="isbn" type="text" required>
+        </div>
+
+        <div class="field">
+            <label for="anio_publicacion">Año de publicación</label>
+            <input id="anio_publicacion" name="anio_publicacion" type="number" min="0">
+        </div>
+
+
+        <!-- AUTOR EXISTENTE -->
+
+        <div class="field">
+            <label for="id_autor">Autor existente</label>
+
+            <select id="id_autor" name="id_autor">
+                <option value="">Seleccionar...</option>
+
+                {% for autor in autores %}
+                    <option value="{{ autor.id_autor }}">
+                        {{ autor.nombre_completo() }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <!-- NUEVO AUTOR -->
+
+        <div class="field">
+            <label for="nuevo_autor_nombres">Nombre del nuevo autor</label>
+
+            <input
+                id="nuevo_autor_nombres"
+                name="nuevo_autor_nombres"
+                type="text"
+                placeholder="Ej. Stephen"
+            >
+        </div>
+
+        <div class="field">
+            <label for="nuevo_autor_apellidos">Apellido del nuevo autor</label>
+
+            <input
+                id="nuevo_autor_apellidos"
+                name="nuevo_autor_apellidos"
+                type="text"
+                placeholder="Ej. King"
+            >
+        </div>
+
+
+        <!-- GENERO -->
+
+        <div class="field">
+            <label for="id_genero">Género</label>
+
+            <select id="id_genero" name="id_genero" required>
+                <option value="">Seleccionar...</option>
+
+                {% for genero in generos %}
+                    <option value="{{ genero.id_genero }}">
+                        {{ genero.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <!-- MOOD -->
+
+        <div class="field">
+            <label for="id_mood">Emoción / Mood</label>
+
+            <select id="id_mood" name="id_mood">
+                <option value="">Seleccionar...</option>
+
+                {% for mood in moods %}
+                    <option value="{{ mood.id_mood }}">
+                        {{ mood.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <!-- FORMATO -->
+
+        <div class="field">
+            <label for="formato">Formato</label>
+
+            <select id="formato" name="formato">
+                <option value="Fisico">Físico</option>
+                <option value="Digital">Digital</option>
+                <option value="Audiolibro">Audiolibro</option>
+            </select>
+        </div>
+
+
+        <!-- PORTADA -->
+
+        <div class="field">
+            <label for="portada">URL de portada</label>
+
+            <input
+                id="portada"
+                name="portada"
+                type="url"
+                placeholder="Opcional"
+            >
+        </div>
+
+
+        <!-- DESCRIPCION -->
+
+        <div class="field full-field">
+            <label for="descripcion">Descripción</label>
+
+            <textarea
+                id="descripcion"
+                name="descripcion"
+                rows="4"
+            ></textarea>
+        </div>
+
+
+        <!-- EJEMPLAR -->
+
+        <div class="full-field">
+            <h3>Primer ejemplar físico</h3>
+
+            <p>
+                Si el libro es físico, puedes registrar también su primer ejemplar.
+            </p>
+        </div>
+
+
+        <!-- BIBLIOTECA -->
+
+        <div class="field">
+            <label for="id_biblioteca">Biblioteca</label>
+
+            <select id="id_biblioteca" name="id_biblioteca">
+                <option value="">Seleccionar...</option>
+
+                {% for biblioteca in bibliotecas %}
+                    <option value="{{ biblioteca.id_biblioteca }}">
+                        {{ biblioteca.nombre }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
+        <!-- CODIGO -->
+
+        <div class="field">
+            <label for="codigo">Código del ejemplar</label>
+
+            <input
+                id="codigo"
+                name="codigo"
+                type="text"
+                placeholder="Ej. LIB-012"
+            >
+        </div>
+
+
+        <!-- PASILLO -->
+
+        <div class="field">
+            <label for="pasillo">Pasillo</label>
+            <input id="pasillo" name="pasillo" type="text">
+        </div>
+
+
+        <!-- ESTANTE -->
+
+        <div class="field">
+            <label for="estante">Estante</label>
+            <input id="estante" name="estante" type="text">
+        </div>
+
+
+        <button class="btn primary full-field" type="submit">
+            Agregar libro
+        </button>
+
+    </form>
+</section>
+
+
+<section class="section container">
+
+    <div class="section-heading">
+        <span class="eyebrow">Préstamos</span>
+
+        <h2>Préstamos activos</h2>
+
+        <p>
+            El administrador puede marcar una devolución y BiblioTEC enviará automáticamente un correo al usuario.
+        </p>
+    </div>
+
+
+    {% if prestamos_activos %}
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Correo</th>
+                        <th>Libro</th>
+                        <th>Fecha límite</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for prestamo in prestamos_activos %}
+
+                        <tr>
+
+                            <td>
+                                {{ prestamo.usuario.nombre_completo() }}
+                            </td>
+
+                            <td>
+                                {{ prestamo.usuario.correo }}
+                            </td>
+
+                            <td>
+                                {{ prestamo.ejemplar.libro.titulo }}
+                            </td>
+
+                            <td>
+                                {{ prestamo.fecha_limite }}
+                            </td>
+
+                            <td>
+
+                                <form method="post" action="{{ url_for('admin_devolver_prestamo', id_prestamo=prestamo.id_prestamo) }}">
+
+                                    <button class="btn secondary small" type="submit">
+                                        Marcar devuelto y notificar
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty-state">
+            No existen préstamos activos.
+        </div>
+
+    {% endif %}
+
+</section>
+
+
 {% endblock %}
